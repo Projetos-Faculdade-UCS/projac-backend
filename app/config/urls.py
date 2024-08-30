@@ -22,7 +22,7 @@ from django.conf import settings
 ROOT_URL = settings.ROOT_URL
 
 urlpatterns = [
-    path(f'{ROOT_URL}/admin/', admin.site.urls),
+    path(f'{ROOT_URL}admin/', admin.site.urls),
     path(f'{ROOT_URL}', include('projac.urls')),
     path(f'{ROOT_URL}api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path(f'{ROOT_URL}api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
