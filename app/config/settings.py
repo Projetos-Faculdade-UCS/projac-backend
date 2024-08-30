@@ -65,6 +65,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "config.urls"
+ROOT_URL = env('ROOT_URL')
 
 TEMPLATES = [
     {
@@ -89,7 +90,17 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE"),
+    'default': {
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'OPTIONS': {
+            'options': '-c search_path=public'
+        },
+    }
 }
 
 
@@ -127,7 +138,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = f'{ROOT_URL}static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type

@@ -17,10 +17,13 @@ Including another URLconf
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+
+ROOT_URL = settings.ROOT_URL
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('projac.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path(f'{ROOT_URL}/admin/', admin.site.urls),
+    path(f'{ROOT_URL}', include('projac.urls')),
+    path(f'{ROOT_URL}api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path(f'{ROOT_URL}api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

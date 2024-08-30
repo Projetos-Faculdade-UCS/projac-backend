@@ -1,25 +1,10 @@
 # Use a specific Python version for consistency
-FROM python:3.10-alpine3.19 AS builder
+# FROM python:latest
+FROM balenalib/raspberrypi4-64-debian-python:latest
 
-# Install system dependencies
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev \
-    && apk add --no-cache postgresql-dev
+COPY requirements.txt ./
 
-# Set the working directory
-WORKDIR /app
-
-# Copy the requirements file and install dependencies
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-
-# Create the final image
-FROM python:3.10-alpine3.19
-
-# Copy only the necessary files from the builder stage
-COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
-COPY --from=builder /usr/lib /usr/lib
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application files
 COPY ./app /app
@@ -31,8 +16,8 @@ COPY ./entrypoint.sh /app/entrypoint.sh
 # RUN apk add --no-cache postgresql-dev
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 80
 
 WORKDIR /app
 
-ENTRYPOINT ["./entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]

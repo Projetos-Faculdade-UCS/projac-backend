@@ -1,7 +1,7 @@
 # gunicorn_config.py
 
 # Bind to 0.0.0.0:8000 to listen for requests on all available IP addresses
-bind = "0.0.0.0:8000"
+bind = "0.0.0.0:80"
 
 # Use a number of worker processes equal to the number of CPUs available
 workers = 2
